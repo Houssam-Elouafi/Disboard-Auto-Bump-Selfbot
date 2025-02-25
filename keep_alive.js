@@ -1,6 +1,6 @@
 var http = require('http');
 
-const PORT = process.env.PORT || 4000; // Use Render's assigned port or fallback to 4000
+const PORT = process.env.PORT || 5000; // Use Render's assigned port or fallback to 4000
 
 http.createServer(function (req, res) {
   res.write("I'm alive");
