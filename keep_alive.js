@@ -1,10 +1,15 @@
 var http = require('http');
 
-const PORT = process.env.PORT || 5000; // Use Render's assigned port or fallback to 4000
+const PORT = process.env.PORT; // DO NOT use a fallback value
 
-http.createServer(function (req, res) {
+if (!PORT) {
+  console.error("PORT environment variable is not set!");
+  process.exit(1);
+}
+
+http.createServer((req, res) => {
   res.write("I'm alive");
   res.end();
-}).listen(PORT, '0.0.0.0', () => {  // Explicitly bind to 0.0.0.0
-  console.log(`Server is listening on port ${PORT} and interface 0.0.0.0`);
+}).listen(PORT, '0.0.0.0', () => {
+  console.log(`Server is running on port ${PORT}`);
 });
