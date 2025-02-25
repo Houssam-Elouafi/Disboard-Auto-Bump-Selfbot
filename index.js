@@ -6,7 +6,9 @@ const express = require('express');
 
 // Create an HTTP server for Render
 const app = express();
-const PORT = process.env.PORT || 3000;  // Use process.env.PORT, or fallback to 3000
+
+// Use Render's PORT environment variable, or a random port between 3000 and 9999
+const PORT = process.env.PORT || Math.floor(Math.random() * (9999 - 3000 + 1)) + 3000;
 
 app.get('/', (req, res) => {
     res.send('Selfbot is running!');
