@@ -1,11 +1,12 @@
 require('dotenv').config();
 require('./keep_alive');
+
 const { Client } = require('discord.js-selfbot-v13');
 const express = require('express');
 
 // Create an HTTP server for Render
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;  // Use the environment variable or fallback to 3000
 
 app.get('/', (req, res) => {
     res.send('Selfbot is running!');
