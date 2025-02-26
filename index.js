@@ -1,4 +1,6 @@
 require('dotenv').config()
+require('./keep_alive');
+
 const { Client } = require('discord.js-selfbot-v13')
 const client = new Client()
 
