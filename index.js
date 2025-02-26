@@ -1,29 +1,32 @@
-require('dotenv').config()
-const keep_alive = require('./keep_alive.js')
-const { Client } = require('discord.js-selfbot-v13')
-const client = new Client()
-
 client.on('ready', async () => {
-    console.log(`Logged in as ${client.user.tag}!`)
+    console.log(`Logged in as ${client.user.tag}!`);
 
-    const channel = await client.channels.fetch(process.env.BUMP_CHANNEL)
-    
-    async function bump() {
-        await channel.sendSlash('302050872383242240', 'bump')
-        console.count('Bumped!')
+    try {
+        const channel = await client.channels.fetch(process.env.BUMP_CHANNEL);
+        console.log(`Fetched channel: ${channel.id}`);
+
+        async function bump() {
+            console.log("Attempting to send bump command...");
+            try {
+                await channel.sendSlash('302050872383242240', 'bump');
+                console.log("Bump command sent successfully!");
+            } catch (err) {
+                console.error("Error sending bump command:", err);
+            }
+        }
+
+        function loop() {
+            var randomNum = Math.round(Math.random() * (9000000 - 7200000 + 1)) + 7200000;
+            setTimeout(function () {
+                bump();
+                loop();
+            }, randomNum);
+        }
+
+        bump();
+        loop();
+
+    } catch (err) {
+        console.error("Error fetching the channel:", err);
     }
-
-    function loop() {
-        // send bump message every 2-3 hours, to prevent detection.
-        var randomNum = Math.round(Math.random() * (9000000 - 7200000 + 1)) + 7200000
-        setTimeout(function () {
-            bump()
-            loop()
-        }, randomNum)
-    }
-    
-    bump()
-    loop()
-})
-
-client.login(process.env.TOKEN)
+});
